@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<% var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] %>
+<% var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %>
+
+<% for (day in list) { %>
+  <% var date = new Date(day); %>
+  <% function k2c (temp) { %>
+     <% return Math.round(temp - 273.15) %>
+  <% }%>
+  <div class="header">
+    <div class="header-top">
+
+        <div class="header-head">
+            <div class="bottom-head">
+                <div class="half">
+                   <div><%= city.name %></div>
+                    <div class="date"><%= months[date.getMonth()] %> <%= date.getDate()%></div>
+                </div>
+
+                <div class="half">
+                  <div>Mininum: <%= k2c(list[day].min) %>°</div>
+                  <div>Maximum: <%= k2c(list[day].max) %>°</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="header-bottom">
+    <% for (hourSample of list[day].list ) { %>
+      <div class="header-bottom1">
+
+          <div class="header-head">
+              <div class="bottom-head">
+                  <h4><%= days[date.getDay()] %></h4>
+                  <h4><%= hourSample.dt_txt.substring(11) %></h5>
+                  <br/>
+                  <h4>Humidity: <%= hourSample.main.humidity %>%</h4>
+                  <h4>Wind: <%= hourSample.wind.speed %> m/s</h4>
+                  <br/>
+              </div>
+              <% var imgSource = 'http://openweathermap.org/img/w/' + hourSample.weather[0].icon + '.png' %>
+              <img src="<%= imgSource %>" alt="" />
+              <h6><%= k2c(hourSample.main.temp) %>°</h6>
+          </div>
+      </div>
+
+    <% } %>
+    </div>
+    <div class="clear"> </div>
+
+  </div>
+<% }%>
+
+</body>
+</html>
